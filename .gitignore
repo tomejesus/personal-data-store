@@ -1,0 +1,60 @@
+# Node.js / npm
+node_modules/
+package-lock.json
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# TypeScript
+dist/
+*.tsbuildinfo
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Sequelize
+sequelize-meta.json
+migrations/
+*.sqlite
+*.db
+
+# Logs
+logs/
+*.log
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+
+# Build artifacts
+build/
+coverage/
+
+# Temporary files
+*.tmp
+*.temp
+
+# IDE-specific files
+.idea/
+*.iml
+
+# Test files (if any)
+test-results/
+junit.xml
+
+# Compiled JavaScript (if not using TypeScript output)
+*.js
+*.js.map
+!src/**/*.js
+
+# Rest Client
+api-test.http
