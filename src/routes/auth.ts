@@ -74,7 +74,7 @@ router.post(
       const token = jwt.sign({ userId: user.user_id }, jwtSecret, {
         expiresIn: "1h",
       });
-      res.json({ token });
+      res.status(200).json({ token }); // Ensure status(200), not 304
     } catch (err) {
       res
         .status(500)
