@@ -15,6 +15,17 @@ nav {
   margin-bottom: 20px;
 }
 
+nav a {
+  text-decoration: none;
+  color: #007bff;
+  margin: 0 10px;
+  padding: 5px;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
 button {
   padding: 10px 20px;
   background-color: #007bff;
@@ -66,28 +77,31 @@ input:focus {
   background-color: #f8f9fa;
   border-radius: 5px;
   margin-top: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .dashboard h2 {
   color: #007bff;
+  margin-bottom: 15px;
 }
 
 .dashboard p,
 .dashboard ul {
   margin: 10px 0;
+  line-height: 1.6;
 }
 
 .dashboard ul {
-  list-style: none;
-  padding: 0;
+  list-style: disc;
+  padding-left: 20px;
 }
 
 .dashboard li {
   background-color: white;
-  padding: 10px;
+  padding: 8px;
   margin: 5px 0;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 /* Responsive Design */
@@ -101,7 +115,13 @@ input:focus {
     max-width: 100%;
   }
 
-  button {
+  button,
+  nav a {
     width: 100%;
+    margin: 5px 0;
+  }
+
+  .dashboard {
+    padding: 10px;
   }
 }

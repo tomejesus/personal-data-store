@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
+import { AuthContext } from '../context/AuthContext';
 
 interface UserData {
   name?: string;
@@ -11,13 +12,16 @@ interface UserData {
 }
 
 const Dashboard: React.FC = () => {
+  const { token } = useContext(AuthContext)!;
   const [userData, setUserData] = useState<UserData | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/user');
+        const response = await axios.get('http://localhost:3000/user', {
+          headers: { Authorization: `Bearer ${token}` }, // Ensure token is sent
+        });
         setUserData(response.data);
         setError(null);
       } catch (err) {
@@ -26,13 +30,13 @@ const Dashboard: React.FC = () => {
       }
     };
     fetchUserData();
-  }, []);
+  }, [token]);
 
-  if (error) return <p style={{ color: 'red' }}>{error}</p>;
+  if (error) return <p className="error">{error}</p>;
   if (!userData) return <p>Loading...</p>;
 
   return (
-    <div>
+    <div className="dashboard">
       <h2>Dashboard</h2>
       <p><strong>Name:</strong> {userData.name || 'N/A'}</p>
       <p><strong>Location:</strong> {userData.location || 'N/A'}</p>

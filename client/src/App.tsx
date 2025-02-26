@@ -1,9 +1,9 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, Link } from 'react-router-dom';
 import { AuthProvider, AuthContext } from './context/AuthContext';
 import SurveyForm from './components/SurveyForm';
 import Dashboard from './components/Dashboard';
-import Login from './components/Login'; // Create this component separately
+import Login from './components/Login';
 import './App.css';
 
 const App: React.FC = () => {
@@ -25,14 +25,17 @@ const AuthConsumer: React.FC = () => {
   return (
     <>
       {isAuthenticated ? (
-        <>
-          <button onClick={logout}>Logout</button>
+        <div>
+          <nav>
+            <Link to="/dashboard">Dashboard</Link> | <Link to="/survey">Survey</Link>
+            <button onClick={logout}>Logout</button>
+          </nav>
           <Routes>
             <Route path="/survey" element={<SurveyForm />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="*" element={<Navigate to="/dashboard" replace />} />
           </Routes>
-        </>
+        </div>
       ) : (
         <Routes>
           <Route path="/login" element={<Login />} />
