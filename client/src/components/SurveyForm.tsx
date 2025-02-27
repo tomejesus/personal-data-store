@@ -29,15 +29,15 @@ const SurveyForm: React.FC = () => {
   const [challenges, setChallenges] = useState<Challenge[]>([]);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [success, setSuccess] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    setIsLoading(true);
     const fetchChallenges = async () => {
       try {
-        console.log({ token });
         const response = await axios.get('http://localhost:3000/challenges', {
           headers: { Authorization: `Bearer ${token}` },
         });
-        // Transform backend response to match Challenge interface
         const transformedChallenges: Challenge[] = response.data.map((challenge: any) => ({
           id: challenge.challenge_id,
           name: challenge.challenge_name,
@@ -45,6 +45,8 @@ const SurveyForm: React.FC = () => {
         setChallenges(transformedChallenges);
       } catch (err) {
         setErrors({ api: 'Failed to fetch challenges: ' + (err as Error).message });
+      } finally {
+        setIsLoading(false);
       }
     };
     fetchChallenges();
@@ -79,6 +81,7 @@ const SurveyForm: React.FC = () => {
     e.preventDefault();
     if (!validateForm()) return;
 
+    setIsLoading(true);
     try {
       const response = await axios.put('http://localhost:3000/user', formData, {
         headers: { Authorization: `Bearer ${token}` },
@@ -87,7 +90,8 @@ const SurveyForm: React.FC = () => {
       setErrors({});
     } catch (err) {
       setErrors({ api: 'Update failed: ' + (err as Error).message });
-      setSuccess(null);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -96,6 +100,7 @@ const SurveyForm: React.FC = () => {
   return (
     <div>
       <h2>Personal Data Survey</h2>
+      {isLoading && <p>Loading...</p>}
       {Object.values(errors).map((error, index) => (
         <p key={index} className="error">{error}</p>
       ))}
@@ -162,7 +167,7 @@ const SurveyForm: React.FC = () => {
           </div>
         ))}
         {errors.challenges && <p className="error">{errors.challenges}</p>}
-        <button type="submit">Submit Survey</button>
+        <button type="submit" disabled={isLoading}>Submit Survey</button>
       </form>
     </div>
   );

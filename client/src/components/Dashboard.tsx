@@ -15,23 +15,28 @@ const Dashboard: React.FC = () => {
   const { token } = useContext(AuthContext)!;
   const [userData, setUserData] = useState<UserData | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    setIsLoading(true);
     const fetchUserData = async () => {
       try {
         const response = await axios.get('http://localhost:3000/user', {
-          headers: { Authorization: `Bearer ${token}` }, // Ensure token is sent
+          headers: { Authorization: `Bearer ${token}` },
         });
         setUserData(response.data);
         setError(null);
       } catch (err) {
         setError('Failed to fetch user data: ' + (err as Error).message);
         setUserData(null);
+      } finally {
+        setIsLoading(false);
       }
     };
     fetchUserData();
   }, [token]);
 
+  if (isLoading) return <p>Loading...</p>;
   if (error) return <p className="error">{error}</p>;
   if (!userData) return <p>Loading...</p>;
 
