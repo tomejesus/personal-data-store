@@ -125,3 +125,12 @@ input:focus {
     padding: 10px;
   }
 }
+
+input[type="radio"] {
+  margin-right: 5px;
+}
+
+input[type="radio"]:checked + label {
+  font-weight: bold;
+  color: #007bff;
+}
