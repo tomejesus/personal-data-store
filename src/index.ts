@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import sequelize from "./models/db";
 import authRoutes from "./routes/auth";
 import userRoutes from "./routes/user";
+import challengesRoutes from "./routes/challenges";
 import cors from "cors";
 
 dotenv.config();
@@ -27,6 +28,7 @@ const PORT = process.env.PORT || 3000;
 // Use Router instances
 app.use("/auth", authRoutes);
 app.use("/user", userRoutes);
+app.use("/challenges", challengesRoutes);
 
 sequelize
   .sync({ force: false })
